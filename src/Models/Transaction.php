@@ -8,15 +8,17 @@ class Transaction extends Model {
     protected $table_name = 'transactions';
     protected $columns = ['user_id', 'receiver_id', 'type', 'amount'];
 
+    public function getUserAttribute(): ?User
+    {
+        return User::find('id', $this->user_id);
+    }
+
     public function getReceiverAttribute(): ?User
     {
-        $user_id = $this->user_id;
-
-        if($this->receiver_id){
-            $user_id = $this->receiver_id;
+        if(!$this->receiver_id){
+            return $this->user;
         }
 
-        $receiver = User::find('id', $user_id);
-        return $receiver;
+        return User::find('id', $this->receiver_id);
     }
 }

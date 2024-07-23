@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Auth;
+use App\Core\Container;
 use App\Core\Model;
 use App\Core\Request;
 
@@ -166,4 +167,14 @@ function dynamicCompare($a, $operator, $b) {
   } else {
       throw new InvalidArgumentException("Invalid operator: $operator");
   }
+}
+
+/**
+ * Get the service container instance
+ *
+ * @return Container
+ */
+function container(): Container
+{
+  return Container::init();
 }

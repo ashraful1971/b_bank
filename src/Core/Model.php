@@ -4,7 +4,6 @@ namespace App\Core;
 
 use App\Core\Contracts\DataStorage;
 use App\Core\Enums\Operation;
-use App\Core\LocalStorage;
 
 class Model {
     protected $table_name;
@@ -21,7 +20,7 @@ class Model {
      */
     public function __construct(array $data = [], bool $is_new = true)
     {
-        $this->storage = LocalStorage::init(DB_PATH);
+        $this->storage = container()->make(DataStorage::class);
         $this->attributes = array_merge($this->attributes, $data);
         $this->is_new = $is_new;
     }

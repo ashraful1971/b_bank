@@ -20,8 +20,6 @@
         'Helvetica Neue', sans-serif;
     }
   </style>
-
-  <title>B-Bank</title>
 </head>
 
 <body class="min-h-screen">

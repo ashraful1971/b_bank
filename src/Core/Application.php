@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Core\Contracts\ServiceContainer;
 use App\Core\Request;
 
 class Application
@@ -9,16 +10,24 @@ class Application
     private static $app;
     private RouteCollection $routes;
     private $request;
+    private $container;
+    private $providers = [];
+
+    public function __construct(ServiceContainer $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Initialize the application by creating the instance
      *
+     * @param ServiceContainer $container
      * @return Application
      */
-    public static function init(): Application
+    public static function init(ServiceContainer $container): Application
     {
         if (!self::$app) {
-            self::$app = new self();
+            self::$app = new self($container);
         }
 
         return self::$app;
@@ -33,7 +42,22 @@ class Application
     public function run(Request $request): void
     {
         $this->request = $request;
+
+        $this->registerProviders();
         $this->handleRequest();
+    }
+
+    /**
+     * Register all the service providers
+     *
+     * @return void
+     */
+    private function registerProviders(): void
+    {
+        foreach($this->providers as $provider){
+            $instance = $this->container->make($provider);
+            $instance->register($this->container);
+        }
     }
 
     /**
@@ -46,6 +70,18 @@ class Application
     {
         $this->routes = $routes;
 
+        return $this;
+    }
+
+    /**
+     * Include the providers
+     *
+     * @param array $providers
+     * @return Application
+     */
+    public function withProviders(array $providers): Application
+    {
+        $this->providers = $providers;
         return $this;
     }
 
@@ -112,7 +148,7 @@ class Application
         }
 
         elseif (is_array($action)) {
-            $obj = new $action[0]();
+            $obj = $this->container->make($action[0]);
             $obj->{$action[1]}($this->request);
         }
     }

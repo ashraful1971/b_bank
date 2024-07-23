@@ -10,8 +10,12 @@ use App\Core\Response;
 class Guest implements Middleware {
     public static function handle(Request $request)
     {
-        if(Auth::isAuthenticated()){
-            return Response::redirect('/dashboard');
+        if(Auth::isAuthenticated() && !Auth::user()->is_admin){
+            return Response::redirect('/customer/dashboard');
+        }
+        
+        if(Auth::isAuthenticated() && Auth::user()->is_admin){
+            return Response::redirect('/admin/dashboard');
         }
     }
 }

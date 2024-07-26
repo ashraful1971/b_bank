@@ -50,7 +50,7 @@ class Container implements ServiceContainer {
 
         $concrete = $this->singleton[$interface] ?? $this->bindings[$interface] ?? $interface;
         
-        if(is_callable($concrete) && !$isSingleton){
+        if(is_callable($concrete)){
             return $this->resolvedInstance($interface, $concrete(), $isSingleton);
         }
         

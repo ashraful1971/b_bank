@@ -37,7 +37,7 @@ function public_path($path): string
  * @param string $path
  * @return void
  */
-function component($path, $data=[]): void
+function component($path, $data = []): void
 {
   require_once VIEW_PATH . '/components/' . $path . '.php';
 }
@@ -151,21 +151,22 @@ function request(): Request|null
  * @param mixed $b
  * @return void
  */
-function dynamicCompare($a, $operator, $b) {
+function dynamicCompare($a, $operator, $b)
+{
   if ($operator == '==') {
-      return $a == $b;
+    return $a == $b;
   } elseif ($operator == '!=') {
-      return $a != $b;
+    return $a != $b;
   } elseif ($operator == '>') {
-      return $a > $b;
+    return $a > $b;
   } elseif ($operator == '<') {
-      return $a < $b;
+    return $a < $b;
   } elseif ($operator == '>=') {
-      return $a >= $b;
+    return $a >= $b;
   } elseif ($operator == '<=') {
-      return $a <= $b;
+    return $a <= $b;
   } else {
-      throw new InvalidArgumentException("Invalid operator: $operator");
+    throw new InvalidArgumentException("Invalid operator: $operator");
   }
 }
 
@@ -186,8 +187,25 @@ function container(): Container
  * @param string $key
  * @return mixed
  */
-function config(string $file='app', string $key): mixed
+function config(string $file = 'app', string $key): mixed
 {
   $arr = include("src/Configs/$file.php");
   return $arr[$key];
+}
+
+/**
+ * Get first two letter of name
+ *
+ * @param string $name
+ * @return string
+ */
+function getFirstTwoLetter(string $name): string
+{
+  $words = explode(' ', $name);
+
+  if (count($words) >= 2) {
+    return substr($words[0], 0, 1) . substr($words[1], 0, 1);
+  }
+
+  return substr($words[0], 0, 2);
 }

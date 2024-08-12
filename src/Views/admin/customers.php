@@ -36,7 +36,7 @@
                           src="https://avatars.githubusercontent.com/u/61485238"
                           alt="Al Nahian" /> -->
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sky-500">
-                          <span class="text-xl font-medium leading-none text-white">AN</span>
+                          <span class="text-xl font-medium leading-none text-white"><?php __(getFirstTwoLetter($customer->fullname))?></span>
                         </span>
 
                         <div class="flex-auto min-w-0">

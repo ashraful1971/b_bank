@@ -29,7 +29,7 @@
                         src="https://avatars.githubusercontent.com/u/831997"
                         alt="Ahmed Shamim Hasan Shaon" /> -->
                                 <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-100">
-                                    <span class="font-medium leading-none text-sky-700">AS</span>
+                                    <span class="font-medium leading-none text-sky-700"><?php __(getFirstTwoLetter(authUser()->fullname))?></span>
                                 </span>
                             </button>
                         </div>
@@ -73,7 +73,7 @@
                     src="https://avatars.githubusercontent.com/u/831997"
                     alt="" /> -->
                         <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-100">
-                            <span class="font-medium leading-none text-sky-700">AS</span>
+                            <span class="font-medium leading-none text-sky-700"><?php __(getFirstTwoLetter(authUser()->fullname))?></span>
                         </span>
                     </div>
                     <div class="ml-3">

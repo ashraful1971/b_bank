@@ -10,7 +10,6 @@ class Model {
     protected $columns;
     protected $attributes = [];
     protected $default = [];
-    protected DataStorage $storage;
     protected $is_new;
 
     /**
@@ -20,9 +19,18 @@ class Model {
      */
     public function __construct(array $data = [], bool $is_new = true)
     {
-        $this->storage = container()->make(DataStorage::class);
         $this->attributes = array_merge($this->attributes, $data);
         $this->is_new = $is_new;
+    }
+
+    /**
+     * Get the storage instance
+     *
+     * @return DataStorage
+     */
+    private static function getStorage(): DataStorage
+    {
+        return container()->make(DataStorage::class);
     }
 
     /**
@@ -65,7 +73,7 @@ class Model {
     public static function all(): array
     {
         $instance = new static();
-        $records = $instance->storage->getAllRecords($instance->table_name);
+        $records = $instance->getStorage()->getAllRecords($instance->table_name);
 
         $collection = [];
         if($records){
@@ -167,10 +175,10 @@ class Model {
     {
         $data = $this->getStoreableData();
         if($this->is_new){
-            return $this->storage->addNewRecord($this->table_name, $data);
+            return $this->getStorage()->addNewRecord($this->table_name, $data);
         }
 
-        return $this->storage->updateRecord($this->table_name, $data, $this->id);
+        return $this->getStorage()->updateRecord($this->table_name, $data, $this->id);
     }
 
     /**

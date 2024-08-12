@@ -40,11 +40,11 @@ class Auth {
     /**
      * Logout the authenticated user
      *
-     * @return void
+     * @return mixed
      */
-    public static function logout(): void
+    public static function logout(): mixed
     {
         unset($_SESSION['user']);
-        redirect('/');
+        return redirect('/');
     }
 }

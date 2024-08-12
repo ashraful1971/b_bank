@@ -3,17 +3,27 @@
 namespace App\Core;
 
 class Response {
+
+    public function __construct(string $url = null)
+    {
+        if($url){
+            header('Location: ' . url($url));
+        }
+
+        exit;
+    }
+    
     /**
      * Send json response to the client
      *
      * @param array $data
      * @return void
      */
-    public static function json(array $data): void
+    public static function json(array $data): self
     {
         header('Content-Type: application/json');
         echo json_encode($data);
-        exit;
+        return new self();
     }
     
     /**
@@ -21,24 +31,23 @@ class Response {
      *
      * @param string $file
      * @param array $data
-     * @return void
+     * @return self
      */
-    public static function view(string $file, array $data=[]): void
+    public static function view(string $file, array $data=[]): self
     {
         header('Content-Type: text/html');
         require_once VIEW_PATH.'/'.$file.'.php';
-        exit;
+        return new self();
     }
     
     /**
      * Redirect the user to the specified link
      *
      * @param string $url
-     * @return void
+     * @return self
      */
-    public static function redirect(string $url): void
+    public static function redirect(string $url): self
     {
-        header('Location: ' . url($url));
-        exit;
+        return new static($url);
     }
 }

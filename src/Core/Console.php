@@ -8,6 +8,20 @@ class Console
 {
 
     private static $options = [];
+    private static $providers = [];
+
+    /**
+     * Register all the service providers
+     *
+     * @return void
+     */
+    private static function registerProviders($providers): void
+    {
+        foreach($providers as $provider){
+            $instance = container()->make($provider);
+            $instance->register(container());
+        }
+    }
 
     /**
      * Add new command class
@@ -25,8 +39,9 @@ class Console
      *
      * @return void
      */
-    public static function run(): void
+    public static function run($providers): void
     {
+        self::registerProviders($providers);
 
         $in_loop = true;
 

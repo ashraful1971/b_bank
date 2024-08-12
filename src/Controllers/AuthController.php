@@ -14,9 +14,9 @@ class AuthController
     /**
      * Get login page view
      *
-     * @return mixed
+     * @return Response
      */
-    public function loginPage(): mixed
+    public function loginPage(): Response
     {
         return Response::view('login');
     }
@@ -25,15 +25,13 @@ class AuthController
      * Login the user
      *
      * @param Request $request
-     * @return mixed
+     * @return Response
      */
-    public function handleLogin(Request $request): mixed
+    public function handleLogin(Request $request): Response
     {
         try {
-           AuthService::login($request->all());
-
+            AuthService::login($request->all());
             return Response::redirect('/customer/dashboard');
-
         } catch (Exception $e) {
             flash_message('error', $e->getMessage());
             return Response::redirect('/login');
@@ -43,9 +41,9 @@ class AuthController
     /**
      * Get register page view
      *
-     * @return mixed
+     * @return Response
      */
-    public function registerPage(): mixed
+    public function registerPage(): Response
     {
         return Response::view('register');
     }
@@ -54,19 +52,18 @@ class AuthController
      * Register new user
      *
      * @param Request $request
-     * @return mixed
+     * @return Response
      */
-    public function handleRegister(Request $request): mixed
+    public function handleRegister(Request $request): Response
     {
         try {
             $request->is_admin = false;
-            
+
             AuthService::register($request->all());
 
             flash_message('success', 'Your account was created successfully!');
 
             return Response::redirect('/login');
-
         } catch (Exception $e) {
             flash_message('error', $e->getMessage());
             return Response::redirect('/register');
@@ -77,10 +74,10 @@ class AuthController
      * Logout logged in user
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
-    public function handleLogout(): void
+    public function handleLogout(): Response
     {
-        Auth::logout();
+        return Auth::logout();
     }
 }

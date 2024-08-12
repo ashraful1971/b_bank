@@ -4,6 +4,7 @@ use App\Core\Auth;
 use App\Core\Container;
 use App\Core\Model;
 use App\Core\Request;
+use App\Core\Response;
 
 /**
  * Function to debug
@@ -115,12 +116,11 @@ function generateUniqueId(): string
  * Redirect to a url
  *
  * @param string $url
- * @return void
+ * @return Response
  */
-function redirect(string $url): void
+function redirect(string $url): Response
 {
-  header('Location: ' . url($url));
-  exit;
+  return new Response($url);
 }
 
 /**
@@ -177,4 +177,17 @@ function dynamicCompare($a, $operator, $b) {
 function container(): Container
 {
   return Container::init();
+}
+
+/**
+ * Get config value
+ *
+ * @param string $file
+ * @param string $key
+ * @return mixed
+ */
+function config(string $file='app', string $key): mixed
+{
+  $arr = include("src/Configs/$file.php");
+  return $arr[$key];
 }

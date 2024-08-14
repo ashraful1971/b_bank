@@ -27,12 +27,12 @@ class RunMigration implements Command
 
     public function handle(): void
     {
-        if(config('app', 'database') != 'mysql'){
+        if(config('database') != 'mysql'){
             echo PHP_EOL . 'Error: Set the database value from Configs/app.php to mysql to run migration'. PHP_EOL;
             exit;
         }
 
-        $dbname = config('app', 'db_name');
+        $dbname = config('db_name');
         try {
             $this->createDatabase($dbname);
             $this->createUsersTable($dbname);
@@ -46,14 +46,14 @@ class RunMigration implements Command
 
     private function createDatabase($dbname)
     {
-        $db = new PDO("mysql:host=".config('app', 'db_host'), config('app', 'db_username'), config('app', 'db_password'));
+        $db = new PDO("mysql:host=".config('db_host'), config('db_username'), config('db_password'));
         $sql = "CREATE DATABASE $dbname";
         $db->exec($sql);
     }
 
     private function createUsersTable($dbname)
     {
-        $db = new PDO("mysql:host=".config('app', 'db_host').";dbname=$dbname", config('app', 'db_username'), config('app', 'db_password'));
+        $db = new PDO("mysql:host=".config('db_host').";dbname=$dbname", config('db_username'), config('db_password'));
         $sql = "CREATE TABLE users (
             `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `first_name` VARCHAR(255) NOT NULL,
@@ -69,7 +69,7 @@ class RunMigration implements Command
     
     private function createTransactionsTable($dbname)
     {
-        $db = new PDO("mysql:host=".config('app', 'db_host').";dbname=$dbname", config('app', 'db_username'), config('app', 'db_password'));
+        $db = new PDO("mysql:host=".config('db_host').";dbname=$dbname", config('db_username'), config('db_password'));
         $sql = "CREATE TABLE transactions (
             `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `user_id` INT UNSIGNED NOT NULL,

@@ -12,7 +12,7 @@ use App\Commands\AddAdmin;
 use App\Commands\RunMigration;
 use App\Core\Console;
 
-$providers = config('app', 'providers');
+$providers = config('providers');
 
 // register options
 Console::addOption(AddAdmin::instance());

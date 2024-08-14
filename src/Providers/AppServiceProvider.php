@@ -13,11 +13,11 @@ class AppServiceProvider implements ServiceProvider {
     {
         $container->singleton(DataStorage::class, function(){
             
-            if(config('app', 'database') == 'file'){
+            if(config('database') == 'file'){
                 return LocalStorage::init(DB_PATH);
             }
 
-            return DBStorage::init(config('app', 'db_host'), config('app', 'db_name'), config('app', 'db_username'), config('app', 'db_password'));
+            return DBStorage::init(config('db_host'), config('db_name'), config('db_username'), config('db_password'));
         });
     }
 }

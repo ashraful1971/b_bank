@@ -187,7 +187,7 @@ function container(): Container
  * @param string $key
  * @return mixed
  */
-function config(string $file = 'app', string $key): mixed
+function config(string $key, string $file = 'app'): mixed
 {
   $arr = include("src/Configs/$file.php");
   return $arr[$key];

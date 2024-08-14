@@ -17,7 +17,7 @@ session_start();
 $container = container();
 
 //providers
-$providers = config('app', 'providers');
+$providers = config('providers');
 
 // run app
 App\Core\Application::init($container)
